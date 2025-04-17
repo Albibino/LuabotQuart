@@ -15,7 +15,6 @@ def create_app():
     migrate.init_app(app, db)
 
     from app.routes.UsuarioRoute import usuario_bp
-
     app.register_blueprint(usuario_bp)
 
     return app
