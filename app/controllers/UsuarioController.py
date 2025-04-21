@@ -1,57 +1,72 @@
 from flask import request, jsonify, abort
-from app import db
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 from app.models.Usuarios import Usuario
+from app import async_session_factory
+import asyncio
 
-def get_usuarios():
-    usuarios = Usuario.query.all()
-    return jsonify(list(usuario.to_dict() for usuario in usuarios))
+async def get_usuarios():
+    async with async_session_factory() as session:
+        result = await session.execute(select(Usuario))
+        usuarios = result.scalars().all()
+        return jsonify([usuario.to_dict() for usuario in usuarios])
 
-def criar_usuario():
+async def criar_usuario():
     data = request.get_json()
-    novo = Usuario(**data)
-    db.session.add(novo)
-    db.session.commit()
-    return jsonify({"id": novo.id}), 201
-
-def atualizar_usuario(id):
-
-    usuario = Usuario.query.get(id)
-
-    if usuario is None:
-        abort(404, "Usuário não encontrado")
-
+    
     try:
+        loop = asyncio.get_event_loop()
+        if loop.is_closed():
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+    except RuntimeError:
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
 
-        data = request.get_json()
+    async with async_session_factory() as session:
+        novo = Usuario(**data)
+        session.add(novo)
+        await session.commit()
+        return jsonify({"id": novo.id}), 201
 
-        if 'nome' in data:
-            usuario.nome = data['nome']
-        if 'email' in data:
-            usuario.email = data['email']
-        if 'discord_id' in data:
-            usuario.discord_id = data['discord_id']
+async def atualizar_usuario(id):
+    async with async_session_factory() as session:
+        result = await session.execute(select(Usuario).filter_by(id=id))
+        usuario = result.scalar_one_or_none()
 
-        db.session.commit()
-        return jsonify(usuario.to_dict())
+        if usuario is None:
+            abort(404, "Usuário não encontrado")
 
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({"error": str(e)}), 500
+        try:
+            data = request.get_json()
 
-def deletar_usuario(id):
+            if 'nome' in data:
+                usuario.nome = data['nome']
+            if 'email' in data:
+                usuario.email = data['email']
+            if 'discord_id' in data:
+                usuario.discord_id = data['discord_id']
 
-    usuario = Usuario.query.get(id)
+            await session.commit()
+            return jsonify(usuario.to_dict())
 
-    if usuario is None:
-        abort(404, "Usuário não encontrado")
+        except Exception as e:
+            session.rollback()
+            return jsonify({"error": str(e)}), 500
 
-    try:
-        
-        db.session.delete(usuario)
-        db.session.commit()
-        return jsonify("Usuário excluído com sucesso"),200
+async def deletar_usuario(id):
+    async with async_session_factory() as session:
+        result = await session.execute(select(Usuario).filter_by(id=id))
+        usuario = result.scalar_one_or_none()
 
-    except Exception as e:
+        if usuario is None:
+            abort(404, "Usuário não encontrado")
 
-        db.session.rollback()
-        return jsonify({"error": str(e)}), 500
+        try:
+            await session.delete(usuario)
+            await session.commit()
+            return jsonify("Usuário excluído com sucesso"), 200
+
+        except Exception as e:
+            await session.rollback()
+            return jsonify({"error": str(e)}), 500
