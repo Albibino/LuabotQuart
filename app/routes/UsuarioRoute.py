@@ -1,9 +1,20 @@
-from flask import Blueprint
+from quart import Blueprint
 from app.controllers.UsuarioController import criar_usuario, get_usuarios, atualizar_usuario, deletar_usuario
 
-usuario_bp = Blueprint('usuario_bp', __name__, url_prefix='/usuarios')
+usuario_bp = Blueprint('usuario_bp', __name__, url_prefix='/api/usuarios')
 
-usuario_bp.route('/listar', methods=['GET'])(get_usuarios)
-usuario_bp.route('/criar',methods=['POST'])(criar_usuario)
-usuario_bp.route('/atualizar/<int:id>', methods=['PUT'])(atualizar_usuario)
-usuario_bp.route('/deletar/<int:id>', methods=['DELETE'])(deletar_usuario)
+@usuario_bp.route('/listar', methods=['GET'])
+async def listar():
+    return await get_usuarios()
+
+@usuario_bp.route('/criar', methods=['POST'])
+async def criar():
+    return await criar_usuario()
+
+@usuario_bp.route('/atualizar/<int:id>', methods=['PUT'])
+async def atualizar(id):
+    return await atualizar_usuario(id)
+
+@usuario_bp.route('/deletar/<int:id>', methods=['DELETE'])
+async def deletar(id):
+    return await deletar_usuario(id)

@@ -1,4 +1,4 @@
-from flask import Flask
+from quart import Quart
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from sqlalchemy.orm import DeclarativeBase
 
@@ -21,7 +21,7 @@ async def get_async_session():
         yield session
 
 def create_app():
-    app = Flask(__name__)
+    app = Quart(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql+asyncpg://postgres:postgres@localhost:5432/luabotdb"
 
     from app.routes.UsuarioRoute import usuario_bp

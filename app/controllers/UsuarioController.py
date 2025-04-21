@@ -1,9 +1,8 @@
-from flask import request, jsonify, abort
+from quart import request, jsonify, abort
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.models.Usuarios import Usuario
 from app import async_session_factory
-import asyncio
 
 async def get_usuarios():
     async with async_session_factory() as session:
@@ -12,17 +11,8 @@ async def get_usuarios():
         return jsonify([usuario.to_dict() for usuario in usuarios])
 
 async def criar_usuario():
-    data = request.get_json()
+    data = await request.get_json()
     
-    try:
-        loop = asyncio.get_event_loop()
-        if loop.is_closed():
-            loop = asyncio.new_event_loop()
-            asyncio.set_event_loop(loop)
-    except RuntimeError:
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-
     async with async_session_factory() as session:
         novo = Usuario(**data)
         session.add(novo)
@@ -38,7 +28,7 @@ async def atualizar_usuario(id):
             abort(404, "Usuário não encontrado")
 
         try:
-            data = request.get_json()
+            data = await request.get_json()
 
             if 'nome' in data:
                 usuario.nome = data['nome']
@@ -51,7 +41,7 @@ async def atualizar_usuario(id):
             return jsonify(usuario.to_dict())
 
         except Exception as e:
-            session.rollback()
+            await session.rollback()
             return jsonify({"error": str(e)}), 500
 
 async def deletar_usuario(id):
