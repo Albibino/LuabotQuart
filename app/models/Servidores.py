@@ -11,7 +11,7 @@ class Servidor(Base):
     nome_servidor = Column(String(100), nullable=True)
     admin_discord_id = Column(String(21), ForeignKey('usuario.discord_id'), nullable=False)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
-    updated_at = Column(DateTime, nullable=False, default=datetime.utcnow)
+    updated_at = Column(DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     mensagens = relationship("Mensagem", back_populates="servidor")
     usuario = relationship("Usuario", back_populates="servidores")

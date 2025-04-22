@@ -11,7 +11,7 @@ class Mensagem(Base):
     servidor_id = Column(String(21), ForeignKey('servidor.guild_id'), nullable=False)
     conteudo = Column(Text, nullable=False)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
-    updated_at = Column(DateTime, nullable=False, default=datetime.utcnow)
+    updated_at = Column(DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     usuario = relationship("Usuario", back_populates="mensagens")
     servidor = relationship("Servidor", back_populates="mensagens")

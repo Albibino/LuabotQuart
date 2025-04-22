@@ -37,6 +37,9 @@ async def atualizar_usuario(id):
             if 'discord_id' in data:
                 usuario.discord_id = data['discord_id']
 
+            from datetime import datetime
+            usuario.updated_at = datetime.utcnow()
+
             await session.commit()
             return jsonify(usuario.to_dict())
 

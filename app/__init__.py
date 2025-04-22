@@ -25,6 +25,12 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql+asyncpg://postgres:postgres@localhost:5432/luabotdb"
 
     from app.routes.UsuarioRoute import usuario_bp
+    from app.routes.ServidorRoute import servidor_bp
+    from app.routes.NivelRoute import nivel_bp
+    from app.routes.MensagemRoute import mensagem_bp
     app.register_blueprint(usuario_bp)
+    app.register_blueprint(servidor_bp)
+    app.register_blueprint(nivel_bp)
+    app.register_blueprint(mensagem_bp)
 
     return app

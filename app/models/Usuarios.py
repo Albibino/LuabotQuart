@@ -12,7 +12,7 @@ class Usuario(Base):
     admin = Column(Boolean, nullable=False, default=False)
     discord_id = Column(String(21), unique=True, nullable=False)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
-    updated_at = Column(DateTime, nullable=False, default=datetime.utcnow)
+    updated_at = Column(DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     servidores = relationship("Servidor", back_populates="usuario")
     mensagens = relationship("Mensagem", back_populates="usuario")
