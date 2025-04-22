@@ -1,11 +1,15 @@
 from quart import Blueprint
-from app.controllers.UsuarioController import criar_usuario, get_usuarios, atualizar_usuario, deletar_usuario
+from app.controllers.UsuarioController import criar_usuario, get_usuarios, atualizar_usuario, deletar_usuario, get_usuario_by_discord_id
 
 usuario_bp = Blueprint('usuario_bp', __name__, url_prefix='/api/usuarios')
 
 @usuario_bp.route('/listar', methods=['GET'])
 async def listar():
     return await get_usuarios()
+
+@usuario_bp.route('/listar/usuario/<String:discord_id>', methods=['GET'])
+async def listar_usuario(discord_id):
+    return await get_usuario_by_discord_id(discord_id)
 
 @usuario_bp.route('/criar', methods=['POST'])
 async def criar():

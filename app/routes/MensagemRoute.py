@@ -1,5 +1,5 @@
 from quart import Blueprint
-from app.controllers.MensagemController import get_mensagens, get_mensagem_by_id, get_mensagens_by_discord_id, get_mensagens_by_guild_id, criar_mensagem, atualizar_mensagem, deletar_mensagem, deletar_mensagens_by_discord_id, deletar_mensagens_by_guild_id
+from app.controllers.MensagemController import get_mensagens, get_mensagem_by_id, get_mensagens_by_discord_id, get_mensagens_by_guild_id, criar_mensagem, deletar_mensagem, deletar_mensagens_by_discord_id, deletar_mensagens_by_guild_id
 
 mensagem_bp = Blueprint('mensagem_bp', __name__, url_prefix='/api/mensagens')
 

@@ -9,6 +9,7 @@ class Mensagem(Base):
     id = Column(Integer, primary_key=True)
     discord_id = Column(String(21), ForeignKey('usuario.discord_id'), nullable=False)
     servidor_id = Column(String(21), ForeignKey('servidor.guild_id'), nullable=False)
+    canal_id = Column(String(21), nullable=False)
     conteudo = Column(Text, nullable=False)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
     updated_at = Column(DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
@@ -24,6 +25,7 @@ class Mensagem(Base):
                 'id': self.id,
                 'discord_id': self.discord_id,
                 'servidor_id': self.servidor_id,
+                'canal_id': self.canal_id,
                 'conteudo': self.conteudo,
                 'created_at': self.created_at,
                 'updated_at': self.updated_at
