@@ -7,7 +7,7 @@ usuario_bp = Blueprint('usuario_bp', __name__, url_prefix='/api/usuarios')
 async def listar():
     return await get_usuarios()
 
-@usuario_bp.route('/listar/usuario/<String:discord_id>', methods=['GET'])
+@usuario_bp.route('/listar/usuario/<string:discord_id>', methods=['GET'])
 async def listar_usuario(discord_id):
     return await get_usuario_by_discord_id(discord_id)
 
