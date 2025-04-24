@@ -7,7 +7,7 @@ mensagem_bp = Blueprint('mensagem_bp', __name__, url_prefix='/api/mensagens')
 async def listar():
     return await get_mensagens()
 
-@mensagem_bp.route('/detalhe/<int:id>', methods=['GET'])
+@mensagem_bp.route('/id/<int:id>', methods=['GET'])
 async def detalhe(id):
     return await get_mensagem_by_id(id)
 
@@ -22,10 +22,6 @@ async def por_servidor(servidor_id):
 @mensagem_bp.route('/criar', methods=['POST'])
 async def criar():
     return await criar_mensagem()
-
-@mensagem_bp.route('/atualizar/<int:id>', methods=['PUT'])
-async def atualizar(id):
-    return await atualizar_mensagem(id)
 
 @mensagem_bp.route('/deletar/<int:id>', methods=['DELETE'])
 async def deletar(id):

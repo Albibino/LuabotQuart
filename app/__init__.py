@@ -28,9 +28,11 @@ def create_app():
     from app.routes.ServidorRoute import servidor_bp
     from app.routes.NivelRoute import nivel_bp
     from app.routes.MensagemRoute import mensagem_bp
+    from app.routes.LogsRoute import logs_bp
     app.register_blueprint(usuario_bp)
     app.register_blueprint(servidor_bp)
     app.register_blueprint(nivel_bp)
     app.register_blueprint(mensagem_bp)
+    app.register_blueprint(logs_bp)
 
     return app
