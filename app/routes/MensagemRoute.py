@@ -23,10 +23,6 @@ async def por_servidor(servidor_id):
 async def criar():
     return await criar_mensagem()
 
-@mensagem_bp.route('/atualizar/<int:id>', methods=['PUT'])
-async def atualizar(id):
-    return await atualizar_mensagem(id)
-
 @mensagem_bp.route('/deletar/<int:id>', methods=['DELETE'])
 async def deletar(id):
     return await deletar_mensagem(id)

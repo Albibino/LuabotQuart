@@ -20,15 +20,6 @@ async def get_nivel_by_discord_id(discord_id):
             
         return jsonify([nivel.to_dict() for nivel in niveis])
 
-async def criar_nivel():
-    data = await request.get_json()
-    
-    async with async_session_factory() as session:
-        novo = Nivel(**data)
-        session.add(novo)
-        await session.commit()
-        return jsonify({"id": novo.id}), 201
-
 async def atualizar_nivel(id):
     async with async_session_factory() as session:
         result = await session.execute(select(Nivel).filter_by(id=id))
