@@ -81,7 +81,8 @@ async def deletar_usuario(id):
             discord_id = usuario.discord_id
             niveis_result = await session.execute(select(Nivel).filter_by(discord_id=discord_id))
             niveis = niveis_result.scalars().all()
-            await session.delete(nivel)
+            for nivel in niveis:
+                await session.delete(nivel)
             await session.delete(usuario)
             await session.commit()
             return jsonify("Usuário excluído com sucesso"), 200

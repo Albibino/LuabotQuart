@@ -7,7 +7,7 @@ mensagem_bp = Blueprint('mensagem_bp', __name__, url_prefix='/api/mensagens')
 async def listar():
     return await get_mensagens()
 
-@mensagem_bp.route('/detalhe/<int:id>', methods=['GET'])
+@mensagem_bp.route('/id/<int:id>', methods=['GET'])
 async def detalhe(id):
     return await get_mensagem_by_id(id)
 
