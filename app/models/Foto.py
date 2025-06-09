@@ -12,8 +12,8 @@ class Foto(Base):
     tamanho = Column(Integer, nullable=False)
     dados = Column(LargeBinary, nullable=False)
     usuario_id = Column(Integer, ForeignKey('usuario.id'), nullable=False)
-    created_at = Column(Datetime, nullable=False, default=datetime.utcnow)
-    updated_at = Column(Datetime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
+    updated_at = Column(DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     usuario = relationship("Usuario", back_populates="fotos")
 

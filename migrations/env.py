@@ -14,9 +14,11 @@ import asyncio
 import greenlet
 from sqlalchemy.ext.asyncio import AsyncEngine
 
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+
 # Importar seus modelos
 from app import Base
-from app.models import Usuario, Servidor, Mensagem, Log, Nivel
+from app.models import Usuario, Servidor, Mensagem, Log, Nivel, Foto
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
