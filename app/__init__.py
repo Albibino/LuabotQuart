@@ -23,6 +23,7 @@ async def get_async_session():
 def create_app():
     app = Quart(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql+asyncpg://postgres:postgres@localhost:5432/luabotdb"
+    app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
     from app.routes.UsuarioRoute import usuario_bp
     from app.routes.ServidorRoute import servidor_bp

@@ -17,6 +17,7 @@ class Usuario(Base):
     servidores = relationship("Servidor", back_populates="usuario")
     mensagens = relationship("Mensagem", back_populates="usuario")
     niveis = relationship("Nivel", back_populates="usuario")
+    fotos = relationship("Foto", back_populates="usuario")
 
     def __repr__(self):
         return (f'<Usuario: {self.nome}>')
