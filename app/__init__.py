@@ -1,4 +1,5 @@
 from quart import Quart
+from quart_cors import cors
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from sqlalchemy.orm import DeclarativeBase
 
@@ -22,6 +23,7 @@ async def get_async_session():
 
 def create_app():
     app = Quart(__name__)
+    app = cors(app, allow_origin="*")
     app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql+asyncpg://postgres:postgres@localhost:5432/luabotdb"
     app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
