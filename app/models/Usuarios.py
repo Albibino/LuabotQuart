@@ -28,6 +28,7 @@ class Usuario(Base):
             'nome': self.nome,
             'email': self.email,
             'discord_id': self.discord_id,
+            'admin': self.admin,
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }

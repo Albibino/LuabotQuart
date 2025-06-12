@@ -50,6 +50,7 @@ async def atualizar_usuario(id):
 
         try:
             data = await request.get_json()
+            print(">>> RECEBIDO NO BACKEND:", data)
 
             if 'nome' in data:
                 usuario.nome = data['nome']
@@ -57,6 +58,8 @@ async def atualizar_usuario(id):
                 usuario.email = data['email']
             if 'discord_id' in data:
                 usuario.discord_id = data['discord_id']
+            if 'admin' in data:
+                usuario.admin = data['admin']
 
             from datetime import datetime
             usuario.updated_at = datetime.utcnow()
