@@ -34,9 +34,9 @@ async def atualizar_nivel(id):
             if 'discord_id' in data:
                 nivel.discord_id = data['discord_id']
             if 'nivel' in data:
-                nivel.nivel = data['nivel']
+                nivel.nivel = int(data['nivel'])
             if 'xp' in data:
-                nivel.xp = data['xp']
+                nivel.xp = int(data['xp'])
             
             from datetime import datetime
             nivel.updated_at = datetime.utcnow()
